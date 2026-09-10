@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sonar Amigos</string>
+    <string name="title_activity_main">Sonar Amigos</string>
+    <string name="package_name">com.sonaramigos.app</string>
+    <string name="custom_url_scheme">com.sonaramigos.app</string>
+</resources>

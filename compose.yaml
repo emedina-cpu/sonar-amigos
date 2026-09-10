@@ -1,0 +1,9 @@
+services:
+  sonar:
+    build: .
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      GROUP_KEY: ${GROUP_KEY:?Definir GROUP_KEY}
+    ports:
+      - "127.0.0.1:3001:3001"
