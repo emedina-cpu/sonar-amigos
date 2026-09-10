@@ -2,13 +2,14 @@
   "name": "sonar-amigos",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@11.17.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "node scripts/sounds.mjs && vite build",
     "server": "node server/index.mjs",
     "test": "node --test server/*.test.mjs",
-    "android:sync": "npm run build && cap sync android",
+    "android:sync": "pnpm run build && cap sync android",
     "android:open": "cap open android"
   },
   "dependencies": {

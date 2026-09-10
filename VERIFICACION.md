@@ -1,5 +1,7 @@
 # Verificación de la primera versión
 
+Migración a pnpm 11.17.0: instalación con `pnpm install --frozen-lockfile`, sincronización con `pnpm run android:sync` y 5 pruebas con `pnpm test` correctas. El proyecto utiliza `pnpm-lock.yaml`; los comandos npm que se mencionan más abajo documentan únicamente la auditoría histórica anterior a la migración.
+
 - Compilación web de producción: correcta.
 - Sincronización Capacitor con Android: correcta.
 - Compilación Gradle de APK debug: correcta con SDK 36.

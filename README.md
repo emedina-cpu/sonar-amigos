@@ -4,15 +4,15 @@ App Android con Capacitor 8 para un grupo de hasta **9 personas**. Ingresás con
 
 ## Compilar con Android Studio
 
-Requisitos: Node.js 22+, Android Studio 2025.2.1 o posterior, SDK Android 36 y JDK 21 (incluido con Android Studio compatible). Android mínimo: 7.0/API 24.
+Requisitos: Node.js 22+, pnpm 11.17.0, Android Studio 2025.2.1 o posterior, SDK Android 36 y JDK 21 (incluido con Android Studio compatible). Android mínimo: 7.0/API 24.
 
 1. Clonar este repositorio y abrir una terminal en su carpeta.
-2. Ejecutar `npm ci`.
-3. Ejecutar `npm run android:sync` (genera los sonidos, compila la web y copia los archivos a Android).
-4. Ejecutar `npm run android:open` o abrir la carpeta `android` desde Android Studio.
+2. Ejecutar `pnpm install --frozen-lockfile`.
+3. Ejecutar `pnpm run android:sync` (genera los sonidos, compila la web y copia los archivos a Android).
+4. Ejecutar `pnpm run android:open` o abrir la carpeta `android` desde Android Studio.
 5. Esperar la sincronización de Gradle. Usar **Build > Generate App Bundles or APKs > Generate APKs** para una APK de prueba, o **Generate Signed App Bundle or APK** para una versión firmada propia.
 
-También se puede ejecutar `android/gradlew assembleDebug` desde la carpeta Android (en Windows: `gradlew.bat assembleDebug`). El resultado queda en `android/app/build/outputs/apk/debug/app-debug.apk`. No guardar claves de firma en Git.
+También se puede ejecutar `./gradlew assembleDebug` desde la carpeta Android (en Windows: `gradlew.bat assembleDebug`). El resultado queda en `android/app/build/outputs/apk/debug/app-debug.apk`. No guardar claves de firma en Git.
 
 ## Servidor compartido: necesario para conectar los teléfonos
 
@@ -20,8 +20,8 @@ También se puede ejecutar `android/gradlew assembleDebug` desde la carpeta Andr
 
 En un servicio que soporte Node.js y WebSockets:
 
-- Comando de instalación: `npm ci --omit=dev`.
-- Comando de inicio: `npm run server`.
+- Comando de instalación: `pnpm install --prod --frozen-lockfile`.
+- Comando de inicio: `pnpm run server`.
 - Variable `GROUP_KEY`: una clave privada compartida entre los integrantes.
 - Variable `PORT`: la asignada por el proveedor (por defecto 3001).
 - Endpoint de salud: `/health`.
@@ -38,10 +38,10 @@ En PowerShell, terminal 1:
 
 ```powershell
 $env:GROUP_KEY='clave-de-prueba'
-npm run server
+pnpm run server
 ```
 
-En otra terminal: `npm run dev`. Abrir la dirección que muestra Vite y usar `ws://localhost:3001`, la clave anterior y nombres distintos en dos pestañas. Para el emulador Android usar `ws://10.0.2.2:3001`. Para un teléfono conectado por USB se puede usar `adb reverse tcp:3001 tcp:3001` y `ws://localhost:3001`. Para teléfonos remotos usar WSS. HTTP/WS sin cifrar se admite únicamente en localhost y el host del emulador.
+En otra terminal: `pnpm run dev`. Abrir la dirección que muestra Vite y usar `ws://localhost:3001`, la clave anterior y nombres distintos en dos pestañas. Para el emulador Android usar `ws://10.0.2.2:3001`. Para un teléfono conectado por USB se puede usar `adb reverse tcp:3001 tcp:3001` y `ws://localhost:3001`. Para teléfonos remotos usar WSS. HTTP/WS sin cifrar se admite únicamente en localhost y el host del emulador.
 
 La versión web sirve para probar la interfaz y el protocolo; la permanencia en segundo plano se implementa en el servicio nativo Android. Los navegadores pueden bloquear reproducción automática hasta una interacción.
 
@@ -59,13 +59,13 @@ La versión web sirve para probar la interfaz y el protocolo; la permanencia en 
 
 ## Sonidos y personalización
 
-`src/catalog.js` contiene nombres, colores y categorías. `scripts/sounds.mjs` genera 30 WAV sintéticos originales; no son grabaciones de barcos reales ni clips de terceros. Se incluyen los WAV en `public/sounds`. Para cambiar el generador, editar ese script y ejecutar `npm run android:sync`. Si se agregan identificadores nuevos, actualizar también la lista permitida de `SonarAudio.java`.
+`src/catalog.js` contiene nombres, colores y categorías. `scripts/sounds.mjs` genera 30 WAV sintéticos originales; no son grabaciones de barcos reales ni clips de terceros. Se incluyen los WAV en `public/sounds`. Para cambiar el generador, editar ese script y ejecutar `pnpm run android:sync`. Si se agregan identificadores nuevos, actualizar también la lista permitida de `SonarAudio.java`.
 
 Hay una pausa mínima de 2,5 segundos entre envíos por usuario. El audio nuevo reemplaza al anterior para no superponer sonidos. Zumbido: vibración de 2000 ms, según soporte del teléfono.
 
 ## Verificación
 
-`npm test` verifica duplicados, reutilización del nombre, pérdida del proceso, destinatarios, identidad del remitente, clave, capacidad, mensajes malformados y límite de frecuencia.
+`pnpm test` verifica duplicados, reutilización del nombre, pérdida del proceso, destinatarios, identidad del remitente, clave, capacidad, mensajes malformados y límite de frecuencia.
 
 Antes de distribuir, probar en dos teléfonos: recibir con pantalla abierta, minimizada y bloqueada; quitar de recientes; forzar detención; perder/restablecer red; volver a entrar; denegar notificaciones; probar mayúsculas duplicadas y vibración. La compilación no sustituye estas pruebas físicas.
 
