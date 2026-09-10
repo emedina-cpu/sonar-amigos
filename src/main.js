@@ -1,5 +1,6 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import { catalog } from "./catalog.js";
+import { isLocalHost } from "./network.js";
 import "./style.css";
 const native = Capacitor.isNativePlatform(),
   Sonar = registerPlugin("Sonar");
@@ -165,12 +166,12 @@ $("join").onsubmit = async (e) => {
     if (u.username || u.password) throw Error();
     if (
       u.protocol === "ws:" &&
-      !["localhost", "127.0.0.1", "10.0.2.2"].includes(u.hostname)
+      !isLocalHost(u.hostname)
     )
       throw Error();
   } catch {
     feedback(
-      "Ingresá una dirección wss:// válida. ws:// solo se admite en pruebas locales.",
+      "Usá ws://IP-DE-TU-PC:3001 en la misma Wi-Fi, o wss:// para Internet.",
     );
     $("url").closest("details").open = true;
     return;

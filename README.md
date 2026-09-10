@@ -55,6 +55,17 @@ Al abrir la app, desplegar **Conexión del grupo**, introducir `wss://dominio-de
 
 ## Prueba local
 
+### Por la misma Wi-Fi, sin USB
+
+1. En la computadora, desde la carpeta del proyecto, ejecutar `$env:GROUP_KEY='amigos123'` y después `pnpm run server`. Dejar esa terminal abierta.
+2. Ejecutar `ipconfig` y buscar la dirección IPv4 del adaptador Wi-Fi (no la de los adaptadores virtuales).
+3. Instalar la APK actualizada 1.0.1 o posterior y conectar el celular a la misma red. En la app ingresar `ws://IP-DE-LA-PC:3001` y la clave del grupo. Ejemplo: `ws://192.168.1.25:3001`.
+4. Para comprobar accesibilidad, abrir `http://IP-DE-LA-PC:3001/health` en el navegador del celular: debe mostrar `{"ok":true}`. Si no carga, revisar el firewall de Windows para permitir el puerto TCP 3001 desde la red local y que el router no tenga aislamiento entre clientes/red de invitados. No desactivar el firewall completo.
+
+No se necesita USB ni alojamiento en Internet en este modo. La computadora debe permanecer encendida, conectada y ejecutando el servidor. La dirección IP puede cambiar al reconectar. Usar este modo en una red de confianza: el tráfico local ws:// no va cifrado.
+
+### Navegador, emulador o USB
+
 En PowerShell, terminal 1:
 
 ```powershell
@@ -62,7 +73,7 @@ $env:GROUP_KEY='clave-de-prueba'
 pnpm run server
 ```
 
-En otra terminal: `pnpm run dev`. Abrir la dirección que muestra Vite y usar `ws://localhost:3001`, la clave anterior y nombres distintos en dos pestañas. Para el emulador Android usar `ws://10.0.2.2:3001`. Para un teléfono conectado por USB se puede usar `adb reverse tcp:3001 tcp:3001` y `ws://localhost:3001`. Para teléfonos remotos usar WSS. HTTP/WS sin cifrar se admite únicamente en localhost y el host del emulador.
+En otra terminal: `pnpm run dev`. Abrir la dirección que muestra Vite y usar `ws://localhost:3001`, la clave anterior y nombres distintos en dos pestañas. Para el emulador Android usar `ws://10.0.2.2:3001`. Para un teléfono conectado por USB se puede usar `adb reverse tcp:3001 tcp:3001` y `ws://localhost:3001`. Para teléfonos remotos usar WSS. HTTP/WS sin cifrar se admite en localhost y en direcciones IPv4 privadas (10.x.x.x, 172.16–31.x.x y 192.168.x.x) para conexiones por la misma red.
 
 La versión web sirve para probar la interfaz y el protocolo; la permanencia en segundo plano se implementa en el servicio nativo Android. Los navegadores pueden bloquear reproducción automática hasta una interacción.
 
