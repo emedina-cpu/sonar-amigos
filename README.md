@@ -2,7 +2,28 @@
 
 App Android con Capacitor 8 para un grupo de hasta **9 personas**. Ingresás con un nombre, elegís una tarjeta y enviás un sonido a otro usuario activo. Incluye **20 efectos divertidos originales, 10 alarmas/bocinas y un zumbido de 2 segundos** con vibración física y movimiento visual dentro de la app.
 
-## Compilar con Android Studio
+## Compilar con un solo comando
+
+Con las dependencias instaladas, ejecutar:
+
+```powershell
+pnpm build
+```
+
+Genera los sonidos, compila la interfaz, sincroniza Capacitor y compila Android sin abrir Android Studio. La APK de prueba queda en **`apk/sonar-amigos-debug.apk`**. El comando detecta el JDK y SDK en las rutas habituales; para instalaciones personalizadas, configurar `JAVA_HOME` y `ANDROID_HOME`.
+
+Para descargar y compilar desde cero:
+
+```powershell
+git clone https://github.com/emedina-cpu/sonar-amigos.git
+cd sonar-amigos
+pnpm install --frozen-lockfile
+pnpm build
+```
+
+`pnpm run build:web` compila únicamente la interfaz web. `pnpm run android:sync` prepara Android sin generar una APK.
+
+## Android Studio (opcional)
 
 Requisitos: Node.js 22+, pnpm 11.17.0, Android Studio 2025.2.1 o posterior, SDK Android 36 y JDK 21 (incluido con Android Studio compatible). Android mínimo: 7.0/API 24.
 

@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "node scripts/sounds.mjs && vite build",
+    "build": "pnpm run android:sync && node scripts/apk.mjs",
+    "build:web": "node scripts/sounds.mjs && vite build",
     "server": "node server/index.mjs",
     "test": "node --test server/*.test.mjs",
-    "android:sync": "pnpm run build && cap sync android",
+    "android:sync": "pnpm run build:web && cap sync android",
     "android:open": "cap open android"
   },
   "dependencies": {
